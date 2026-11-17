@@ -1,7 +1,8 @@
 /**
- * dsh-qq-douyin-video —— 宿主半端
+ * dsh-douyin-link-video —— 宿主半端
  * ============================================================================
- * 一句话：**在 QQ 聊天里发一条抖音视频链接，插件自动把这个视频（MP4）发回同一个 QQ 会话。**
+ * 一句话：**抖音链接 → 视频**。在 QQ 聊天里发一条抖音视频链接，插件自动把这条视频（MP4）
+ * 下载下来并发回同一个 QQ 会话 —— 只存视频，不抽帧、不转写。
  *
  * 工作方式（完全本地，不借助云端）：
  *   1. 轮询绑定的 QQ 会话（SnowLuma OneBot v11 HTTP，端口/令牌从 `$DSH_HOME/qq-bridge/config.json` 发现）；
@@ -10,7 +11,7 @@
  *   4. 通过 OneBot 以**视频消息**发回原会话，然后删掉临时文件。
  *
  * 边界：只下载 MP4，不抽帧、不转写、不点赞、不评论、不发私信给其他人。
- * 状态/日志在 `$DSH_HOME/qq-douyin-video/state.json`，不写进插件包目录。
+ * 状态/日志在 `$DSH_HOME/douyin-link-video/state.json`，不写进插件包目录。
  */
 import { existsSync, mkdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
@@ -258,7 +259,7 @@ export function apply(ctx) {
   ctx.effect(() => {
     startLoop()
     return () => stopLoop()
-  }, 'dsh-qq-douyin-video: 轮询')
+  }, 'dsh-douyin-link-video: 轮询')
 
   /* ───────────────────────────── 工具 ───────────────────────────── */
 
@@ -269,7 +270,7 @@ export function apply(ctx) {
       ? '还没绑定 QQ 会话'
       : `QQ ${state.qq.kind === 'group' ? '群' : '私聊'} ${state.qq.id}${state.qq.label ? `（${state.qq.label}）` : ''}`
     const lines = [
-      `【qq-douyin-video】v${VERSION} · ${state.enabled ? '已启用' : '未启用'} · ${binding}`,
+      `【douyin-link-video】v${VERSION} · ${state.enabled ? '已启用' : '未启用'} · ${binding}`,
       `只处理来自：${state.ownerId || (state.qq.kind === 'private' ? '对方（私聊自动）' : '（群聊未限制发送者）')}`,
       `轮询：每 ${Math.round(state.pollMs / 1000)} 秒 · 已发送 ${state.stats.sent} 条 · 失败 ${state.stats.errors} 次`,
       `QQ 侧：${onebot.baseUrl}${onebot.tokenFound ? '（有 token）' : '（没找到 accessToken）'}`,
@@ -354,9 +355,9 @@ export function apply(ctx) {
   }
 
   ctx.effect(() => ctx.tools.register({
-    name: 'qq_douyin_video',
+    name: 'douyin_link_video',
     description: [
-      'QQ × 抖音「发链接 → 得到视频」：在绑定的 QQ 会话里发一条抖音视频链接，插件自动下载 MP4 并以 QQ 视频消息发回同一个会话。',
+      '🔗 抖音链接 → 视频：在绑定的 QQ 会话里发一条抖音视频链接，插件自动下载这条视频（MP4），并以 QQ 视频消息发回同一个会话（只存视频：不抽帧/不转写/不点赞/不评论）。',
       '第一次使用：先 `action=bind` 绑定 QQ 会话（qq_kind=private/group，qq_id=QQ号/群号；群聊还要 owner_id=你自己的 QQ 号），再 `action=enable enabled=true`。',
       '前提：本机 SnowLuma/QQ 桥接在线；本机已安装「刷抖音」插件（dsh-douyin-scroll）并登录过抖音（用来取抖音视频详情/下载地址）。',
       'action=status 看状态；action=test 用一条链接验证（dry=true 只取详情不发送）；action=config 改 pollMs / ownerId / onebotBaseUrl；action=log 看最近记录。',
@@ -434,7 +435,7 @@ export function apply(ctx) {
         return { ok: false, error: String((error && error.message) || error), text: `执行出错：${String((error && error.message) || error)}` }
       }
     },
-  }), 'dsh-qq-douyin-video: 工具 qq_douyin_video')
+  }), 'dsh-douyin-link-video: 工具 douyin_link_video')
 
   // 首次加载：保证运行目录存在；状态文件路径便于排查
   try {

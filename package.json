@@ -1,7 +1,7 @@
 {
-  "name": "dsh-qq-douyin-video",
+  "name": "dsh-douyin-link-video",
   "version": "0.1.0",
-  "description": "DSH 插件：在 QQ 聊天里发一条抖音视频链接，自动把视频（MP4）发回同一个 QQ 会话。",
+  "description": "抖音链接 → 视频：在 QQ 聊天里发一条抖音视频链接，自动下载这条视频（MP4）并发回同一个 QQ 会话——只存视频，不抽帧、不转写。",
   "license": "MIT",
   "author": "MaYuQiNB",
   "type": "module",
@@ -39,10 +39,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MaYuQiNB/dsh-qq-douyin-video.git"
+    "url": "https://github.com/MaYuQiNB/dsh-douyin-link-video.git"
   },
   "bugs": {
-    "url": "https://github.com/MaYuQiNB/dsh-qq-douyin-video/issues"
+    "url": "https://github.com/MaYuQiNB/dsh-douyin-link-video/issues"
   },
-  "homepage": "https://github.com/MaYuQiNB/dsh-qq-douyin-video#readme"
+  "homepage": "https://github.com/MaYuQiNB/dsh-douyin-link-video#readme"
 }

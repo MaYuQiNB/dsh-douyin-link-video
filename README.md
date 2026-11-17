@@ -1,7 +1,8 @@
-# dsh-qq-douyin-video ｜ QQ 发抖音链接 → 自动收到视频
+# dsh-douyin-link-video ｜ 抖音链接 → 视频：QQ 里发链接，自动收到视频
 
-> 一个 [DeepSeek Harness](https://github.com/deepseek-ai) (DSH) 插件：**在 QQ 聊天里发一条抖音视频链接，
-> 插件自动把这条视频（MP4）发回同一个 QQ 会话**——不用点开浏览器，也不用问 AI。
+> 一个 [DeepSeek Harness](https://github.com/deepseek-ai) (DSH) 插件：**把「抖音链接」变成「视频文件」**——
+> 在 QQ 聊天里发一条抖音视频链接，插件自动下载这条视频（MP4），并以 QQ 视频消息发回同一个会话；
+> 不用点开浏览器，也不用问 AI。**只存视频**：不抽帧、不转写、不点赞、不评论。
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#许可证)
 
@@ -39,12 +40,12 @@ QQ 里收到：      📹 一条可直接播放的视频消息
 # 1）确保这两个插件已装好并登录
 #    - dsh-douyin-scroll（刷抖音）：装好后进 设置 → 刷抖音 → 装主依赖 → 扫码登录
 #    - 本插件
-dsh plugin --profile desktop add link:/path/to/dsh-qq-douyin-video
+dsh plugin --profile desktop add link:/path/to/dsh-douyin-link-video
 
 # 2）重启 DSH（bundle 层要重启才组装）
 ```
 
-重启后工具 `qq_douyin_video` 出现在所有 Agent 的工具列表里。
+重启后工具 `douyin_link_video` 出现在所有 Agent 的工具列表里。
 
 ## 使用
 
@@ -75,7 +76,7 @@ dsh plugin --profile desktop add link:/path/to/dsh-qq-douyin-video
 | `log` | 最近记录（`limit`，默认 10） |
 | `config` | 改 `pollMs`（8000–120000）/ `ownerId` / `onebotBaseUrl`（一般不用改，自动发现） |
 
-状态文件：`$DSH_HOME/qq-douyin-video/state.json`；临时 MP4 在 `$DSH_HOME/qq-douyin-video/tmp/`，发完即删。
+状态文件：`$DSH_HOME/douyin-link-video/state.json`；临时 MP4 在 `$DSH_HOME/douyin-link-video/tmp/`，发完即删。
 **不会把 access token 写进状态文件或日志。**
 
 ## 工作原理

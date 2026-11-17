@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * selfcheck.mjs —— dsh-qq-douyin-video 的离线自检（不联网、不起子进程、不碰真实 $DSH_HOME）。
+ * selfcheck.mjs —— dsh-douyin-link-video 的离线自检（不联网、不起子进程、不碰真实 $DSH_HOME）。
  *
  * 覆盖：
  *   1. lib/store.mjs：默认值 / 规整（poll 夹紧、qq、ownerId、recent 上限、log 上限）/ 读写往返 / publicState
@@ -186,7 +186,7 @@ function onebotTests() {
 
 function staticTests() {
   const index = readFileSync(join(ROOT, 'index.js'), 'utf8')
-  contains('工具名注册', index, "name: 'qq_douyin_video'")
+  contains('工具名注册', index, "name: 'douyin_link_video'")
   for (const action of ['status', 'bind', 'enable', 'test', 'config', 'log']) {
     contains(`action ${action}`, index, `action === '${action}'`)
   }
@@ -194,12 +194,12 @@ function staticTests() {
   contains('不抽帧（无 extractFramesAndAudio）', !index.includes('extractFramesAndAudio'), true)
 
   const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
-  eq('package name', pkg.name, 'dsh-qq-douyin-video')
+  eq('package name', pkg.name, 'dsh-douyin-link-video')
   eq('package 声明 bundle patch', pkg.dsh && pkg.dsh.bundle && pkg.dsh.bundle.patch, './cordis.patch.yml')
   truthy('cordis.patch.yml 存在', existsSync(join(ROOT, pkg.dsh.bundle.patch)))
   const patch = readFileSync(join(ROOT, 'cordis.patch.yml'), 'utf8')
-  contains('patch id 与包名对齐', patch, 'name: dsh-qq-douyin-video')
-  contains('README 存在', readFileSync(join(ROOT, 'README.md'), 'utf8'), 'qq-douyin-video')
+  contains('patch id 与包名对齐', patch, 'name: dsh-douyin-link-video')
+  contains('README 存在', readFileSync(join(ROOT, 'README.md'), 'utf8'), 'douyin-link-video')
 }
 
 async function main() {
